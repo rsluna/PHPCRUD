@@ -1,0 +1,57 @@
+<?php
+
+
+if (isset($_POST['submit'])) {
+    // Pegando os dados
+    $nome = $_POST['nome'];
+    $documento = $_POST['documento'];
+    $email = $_POST['email'];
+
+    // Preparando o insert de base
+    $sql = "INSERT INTO pessoa (nome,documento,email) VALUES (:nome, :documento, :email)";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->bindParam(':nome', $nome);
+    $stmt->bindParam(':documento', $documento);
+    $stmt->bindParam(':email', $email);
+
+    // Executando
+    $stmt->execute();
+
+    
+    header('location: index.php');
+}
+
+?>
+
+ /* HTML
+ 
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>PHP CRUD</title>
+</head>
+<body>
+    <div>
+        <h1>PHP CRUD</h1>
+        <form action="index.php" method="post">
+            <p>
+                <label>Name:</label><br>
+                <input type="text" nome="nome" required>
+            </p>
+            <p>
+                <label>Document:</label><br>
+                <input type="number" name="documento" required>
+            </p>
+            <p>
+                <label>Email:</label><br>
+                <input type="text" name="email" required>
+            </p>
+            <p>
+                <input type="submit" name="submit" value="Submit">
+            </p>
+        </form>
+    </div>
+</body>
+</html>
